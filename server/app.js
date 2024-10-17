@@ -23,16 +23,15 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 // routes
 app.use("/api", apiRoutes);
 
-app.get('/test-cookie', (req, res) => {
-  res.cookie('test_cookie', 'test_value', {
+app.get("/test-cookie", (req, res) => {
+  res.cookie("test_cookie", "test_value", {
     httpOnly: false,
-    sameSite: 'lax',
+    sameSite: "lax",
     secure: false,
     maxAge: 3600000, // 1 hour
   });
-  res.send('Test cookie set');
+  res.send("Test cookie set");
 });
-
 
 // Test route
 app.get("/test", (req, res, next) => {
