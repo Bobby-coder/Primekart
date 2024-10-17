@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   insertBulkProducts,
+  searchProducts,
 } from "../../controllers/productController.js";
 
 import {
@@ -17,6 +18,9 @@ const router = express.Router();
 
 // Create a product
 router.post("/", isAuthenticated, authorizeRoles("admin"), createProduct);
+
+// search products by query
+router.get("/search", searchProducts);
 
 // Get a single product
 router.get("/:id", getSingleProduct);
