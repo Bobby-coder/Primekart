@@ -19,7 +19,7 @@ function SearchPage() {
     if (searchText) {
       setLoading(true);
       axios
-        .get(`https://dummyjson.com/products/search?q=${searchText}`)
+        .get(`${import.meta.env.VITE_BASE_URL}/products/search?q=${searchText}`)
         .then((res) => {
           setLoading(false);
           setProducts(res.data.products);
@@ -63,7 +63,7 @@ function SearchPage() {
           ) : (
             // Render resultant products only if search text is not empty
             products.map((product) => (
-              <ProductGridItem key={product.id} product={product} />
+              <ProductGridItem key={product._id} product={product} />
             ))
           )}
         </div>
