@@ -72,8 +72,16 @@ export const getSingleProduct = async (req, res, next) => {
 export const getAllProductsByCategory = async (req, res, next) => {
   try {
     const { categoryName } = req.params;
+    let { sortBy, order } = req.query;
+    sortBy = sortBy || "title";
+    order = order || "asc";
 
-    const products = await Product.find({ category: categoryName });
+    const sortingOption = {};
+    sortingOption[sortBy] = order === "asc" ? 1 : -1;
+
+    const products = await Product.find({ category: categoryName }).sort(
+      sortingOption
+    );
 
     return res
       .status(200)
@@ -159,4 +167,30 @@ export const insertBulkProducts = async (req, res, next) => {
 };
 
 // search products
-export const searchProducts = async (req, res, next) => {};
+export const searchProducts = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+
+    if (!q) {
+      return next(new ErrorHandler("Please provide a search query", 500));
+    }
+
+    const products = await Product.find({
+      $or: [
+        { title: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+        { category: { $regex: q, $options: "i" } },
+        { tags: { $regex: q, $options: "i" } },
+        { brand: { $regex: q, $options: "i" } },
+      ],
+    });
+
+    return res
+      .status(200)
+      .json(
+        successResponse("Products fetched successfully", "products", products)
+      );
+  } catch (err) {
+    return next(new ErrorHandler(err.message, 500));
+  }
+};
