@@ -6,8 +6,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import InvalidCategory from "./InvalidCategory";
 
-function 
-ProductGrid() {
+function ProductGrid() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
@@ -20,7 +19,9 @@ ProductGrid() {
     setLoading(true);
     axios
       .get(
-        `${import.meta.env.VITE_BASE_URL}/products/category/${selectedCategory}`
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/products/category/${selectedCategory}?sortBy=${sortBy}&order=${order}`
       )
       .then((res) => {
         setLoading(false);
