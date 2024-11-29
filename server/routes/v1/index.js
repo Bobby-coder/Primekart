@@ -5,6 +5,7 @@ import reviewRouter from "./reviewRoutes.js";
 import cartRouter from "./cartRoutes.js";
 import wishlistRouter from "./wishlistRoutes.js";
 import categoryRouter from "./categoryRoute.js";
+import paymentRouter from "./paymentRoutes.js";
 
 const router = express.Router();
 
@@ -19,5 +20,7 @@ router.use("/cart", cartRouter);
 router.use("/wishlist", wishlistRouter);
 
 router.use("/categories", categoryRouter);
+
+router.use("/payment", paymentRouter);
 
 export default router;
